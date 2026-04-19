@@ -1,0 +1,517 @@
+<!doctype html>
+<html lang="en">
+    <head>
+        <meta charset="UTF-8" />
+        <meta name="viewport" content="width=device-width, initial-scale=1.0" />
+        <title>Dark Side Converter | PX to REM</title>
+        <script src="https://cdn.tailwindcss.com"></script>
+        <link
+            href="https://fonts.googleapis.com/css2?family=Inter:wght@300;400;600&family=JetBrains+Mono:wght@400;700&display=swap"
+            rel="stylesheet"
+        />
+        <script>
+            tailwind.config = {
+                theme: {
+                    extend: {
+                        fontFamily: {
+                            sans: ['Inter', 'sans-serif'],
+                            mono: ['JetBrains Mono', 'monospace'],
+                        },
+                        colors: {
+                            sith: {
+                                400: '#f87171',
+                                500: '#dc2626',
+                                600: '#b91c1c',
+                                900: '#450a0a',
+                            },
+                        },
+                    },
+                },
+            };
+        </script>
+        <style>
+            body {
+                background-color: #050505;
+                background-image: radial-gradient(
+                    circle at 50% 0%,
+                    #1a0505 0%,
+                    #050505 70%
+                );
+                color: #e4e4e7;
+            }
+            .glass-panel {
+                background: rgba(15, 15, 15, 0.85);
+                backdrop-filter: blur(12px);
+                border: 1px solid rgba(220, 38, 38, 0.15);
+                box-shadow:
+                    0 4px 30px rgba(0, 0, 0, 0.5),
+                    inset 0 1px 0 rgba(255, 255, 255, 0.05);
+            }
+            .imperial-input {
+                background: #09090b;
+                border: 1px solid #27272a;
+                transition: all 0.2s ease;
+            }
+            .imperial-input:focus {
+                outline: none;
+                border-color: #dc2626;
+                box-shadow: 0 0 15px rgba(220, 38, 38, 0.2);
+            }
+            ::-webkit-scrollbar {
+                width: 6px;
+            }
+            ::-webkit-scrollbar-track {
+                background: transparent;
+            }
+            ::-webkit-scrollbar-thumb {
+                background: #27272a;
+                border-radius: 3px;
+            }
+            ::-webkit-scrollbar-thumb:hover {
+                background: #dc2626;
+            }
+        </style>
+    </head>
+    <body class="flex flex-col min-h-screen">
+        <nav
+            class="w-full border-b border-sith-900/50 bg-black/60 backdrop-blur-md sticky top-0 z-50"
+        >
+            <div
+                class="max-w-5xl mx-auto px-4 sm:px-6 h-14 flex items-center justify-between"
+            >
+                <div class="flex items-center gap-3">
+                    <svg
+                        class="w-5 h-5 text-sith-500"
+                        fill="currentColor"
+                        viewBox="0 0 24 24"
+                    >
+                        <path
+                            d="M12 2L2 22h20L12 2zm0 4.5l6.5 13h-13L12 6.5zM12 10v4h2v-4h-2zm0 5v2h2v-2h-2z"
+                        />
+                    </svg>
+                    <p
+                        class="font-mono font-bold tracking-widest text-zinc-100 uppercase text-sm"
+                    >
+                        Px to REM :
+                    </p>
+                    <p class="font-mono text-[9px] md:text-lg items-start">
+                        Welcome to the dark side
+                    </p>
+                </div>
+
+                <a
+                    href="https://github.com/weerayosong/px-rem-converter-darkside"
+                    target="_blank"
+                    rel="noopener noreferrer"
+                    class="text-zinc-500 hover:text-zinc-200 transition-colors duration-200"
+                    aria-label="GitHub Repository"
+                >
+                    <svg
+                        class="w-5 h-5 sm:w-6 sm:h-6"
+                        fill="currentColor"
+                        viewBox="0 0 24 24"
+                        aria-hidden="true"
+                    >
+                        <path
+                            fill-rule="evenodd"
+                            d="M12 2C6.477 2 2 6.484 2 12.017c0 4.425 2.865 8.18 6.839 9.504.5.092.682-.217.682-.483 0-.237-.008-.868-.013-1.703-2.782.605-3.369-1.343-3.369-1.343-.454-1.158-1.11-1.466-1.11-1.466-.908-.62.069-.608.069-.608 1.003.07 1.531 1.032 1.531 1.032.892 1.53 2.341 1.088 2.91.832.092-.647.35-1.088.636-1.338-2.22-.253-4.555-1.113-4.555-4.951 0-1.093.39-1.988 1.029-2.688-.103-.253-.446-1.272.098-2.65 0 0 .84-.27 2.75 1.026A9.564 9.564 0 0112 6.844c.85.004 1.705.115 2.504.337 1.909-1.296 2.747-1.027 2.747-1.027.546 1.379.202 2.398.1 2.651.64.7 1.028 1.595 1.028 2.688 0 3.848-2.339 4.695-4.566 4.943.359.309.678.92.678 1.855 0 1.338-.012 2.419-.012 2.747 0 .268.18.58.688.482A10.019 10.019 0 0022 12.017C22 6.484 17.522 2 12 2z"
+                            clip-rule="evenodd"
+                        />
+                    </svg>
+                </a>
+            </div>
+        </nav>
+
+        <main class="flex-grow flex flex-col items-center px-4 py-8 sm:py-12">
+            <section
+                class="mb-8 flex flex-col items-center text-center animate-fade-in"
+            >
+                <div class="relative group">
+                    <div
+                        class="absolute -inset-0.5 bg-sith-600 rounded-full blur opacity-50 group-hover:opacity-100 transition duration-1000 group-hover:duration-200"
+                    ></div>
+                    <img
+                        src="https://images.unsplash.com/photo-1655983547113-ebd215417da9?w=500&auto=format&fit=crop&q=60&ixlib=rb-4.1.0&ixid=M3wxMjA3fDB8MHxzZWFyY2h8N3x8dmFkZXJ8ZW58MHx8MHx8fDA%3D"
+                        alt="Lord Vader"
+                        class="relative w-24 h-24 sm:w-32 sm:h-32 rounded-full object-cover border-2 border-zinc-900 shadow-2xl grayscale hover:grayscale-0 transition-all duration-500"
+                    />
+                </div>
+                <h2
+                    class="mt-4 text-xl sm:text-lg font-bold tracking-widest uppercase text-zinc-200"
+                >
+                    Dark Side Converter | PX to REM
+                </h2>
+                <p
+                    class="mt-2 text-[10px] sm:text-xs text-zinc-400 font-mono tracking-tight leading-relaxed max-w-sm"
+                >
+                    "Lord Vader grew tired of manual CSS calculations. He
+                    commanded this tool be built. Do not fail him, Stormtrooper
+                    the Coder."
+                </p>
+            </section>
+
+            <section
+                class="w-full max-w-lg glass-panel rounded-xl p-5 sm:p-8 relative overflow-hidden"
+            >
+                <div
+                    class="absolute -top-24 -right-24 w-48 h-48 bg-sith-500 rounded-full mix-blend-screen filter blur-[80px] opacity-20 pointer-events-none"
+                ></div>
+
+                <div
+                    class="mb-6 sm:mb-8 flex flex-col sm:flex-row items-center justify-center gap-2 sm:gap-4"
+                >
+                    <label
+                        for="base"
+                        class="text-xs sm:text-sm font-semibold text-zinc-400 uppercase tracking-wider"
+                        >Root Font Size</label
+                    >
+                    <div class="relative w-24">
+                        <input
+                            type="text"
+                            id="base"
+                            value="16"
+                            class="imperial-input w-full rounded pl-3 pr-8 py-1.5 font-mono text-center text-sm"
+                            autocomplete="off"
+                        />
+                        <span
+                            class="absolute right-3 top-1/2 -translate-y-1/2 text-xs text-zinc-500"
+                            >px</span
+                        >
+                    </div>
+                </div>
+
+                <p class="text-sm text-zinc-500 text-center mb-4">
+                    [ Input
+                    <span class="text-sith-500 font-bold">'NUMBER'</span> only
+                    or else!! ]
+                </p>
+                <div
+                    class="flex flex-col md:flex-row gap-4 md:gap-6 items-center w-full"
+                >
+                    <div class="relative group w-full">
+                        <label
+                            class="block text-[10px] sm:text-xs text-sith-500 font-bold uppercase tracking-widest mb-1.5 sm:mb-2 text-center md:text-left"
+                            >Pixels</label
+                        >
+                        <div class="relative">
+                            <input
+                                type="text"
+                                id="px"
+                                placeholder="0"
+                                class="imperial-input w-full rounded-lg pl-4 pr-10 py-3 sm:py-4 font-mono text-lg sm:text-xl md:text-2xl"
+                                autocomplete="off"
+                            />
+                            <div
+                                class="absolute right-2 top-0 bottom-0 flex flex-col justify-center gap-1 opacity-50 group-hover:opacity-100 transition-opacity"
+                            >
+                                <button
+                                    onclick="adjustValue('px', 1)"
+                                    class="p-1 hover:text-sith-400 focus:outline-none"
+                                >
+                                    <svg
+                                        class="w-3 h-3 sm:w-4 sm:h-4"
+                                        fill="none"
+                                        stroke="currentColor"
+                                        viewBox="0 0 24 24"
+                                    >
+                                        <path
+                                            stroke-linecap="round"
+                                            stroke-linejoin="round"
+                                            stroke-width="3"
+                                            d="M5 15l7-7 7 7"
+                                        ></path>
+                                    </svg>
+                                </button>
+                                <button
+                                    onclick="adjustValue('px', -1)"
+                                    class="p-1 hover:text-sith-400 focus:outline-none"
+                                >
+                                    <svg
+                                        class="w-3 h-3 sm:w-4 sm:h-4"
+                                        fill="none"
+                                        stroke="currentColor"
+                                        viewBox="0 0 24 24"
+                                    >
+                                        <path
+                                            stroke-linecap="round"
+                                            stroke-linejoin="round"
+                                            stroke-width="3"
+                                            d="M19 9l-7 7-7-7"
+                                        ></path>
+                                    </svg>
+                                </button>
+                            </div>
+                        </div>
+                    </div>
+
+                    <div
+                        class="text-zinc-600 flex-shrink-0 rotate-90 md:rotate-0 my-1 md:my-0 md:mt-6"
+                    >
+                        <svg
+                            class="w-5 h-5 sm:w-6 sm:h-6"
+                            fill="none"
+                            stroke="currentColor"
+                            viewBox="0 0 24 24"
+                        >
+                            <path
+                                stroke-linecap="round"
+                                stroke-linejoin="round"
+                                stroke-width="2"
+                                d="M8 7h12m0 0l-4-4m4 4l-4 4m0 6H4m0 0l4 4m-4-4l4-4"
+                            ></path>
+                        </svg>
+                    </div>
+
+                    <div class="relative group w-full">
+                        <label
+                            class="block text-[10px] sm:text-xs text-sith-500 font-bold uppercase tracking-widest mb-1.5 sm:mb-2 text-center md:text-left"
+                            >REM</label
+                        >
+                        <div class="relative">
+                            <input
+                                type="text"
+                                id="rem"
+                                placeholder="0"
+                                class="imperial-input w-full rounded-lg pl-4 pr-10 py-3 sm:py-4 font-mono text-lg sm:text-xl md:text-2xl"
+                                autocomplete="off"
+                            />
+                            <div
+                                class="absolute right-2 top-0 bottom-0 flex flex-col justify-center gap-1 opacity-50 group-hover:opacity-100 transition-opacity"
+                            >
+                                <button
+                                    onclick="adjustValue('rem', 0.125)"
+                                    class="p-1 hover:text-sith-400 focus:outline-none"
+                                >
+                                    <svg
+                                        class="w-3 h-3 sm:w-4 sm:h-4"
+                                        fill="none"
+                                        stroke="currentColor"
+                                        viewBox="0 0 24 24"
+                                    >
+                                        <path
+                                            stroke-linecap="round"
+                                            stroke-linejoin="round"
+                                            stroke-width="3"
+                                            d="M5 15l7-7 7 7"
+                                        ></path>
+                                    </svg>
+                                </button>
+                                <button
+                                    onclick="adjustValue('rem', -0.125)"
+                                    class="p-1 hover:text-sith-400 focus:outline-none"
+                                >
+                                    <svg
+                                        class="w-3 h-3 sm:w-4 sm:h-4"
+                                        fill="none"
+                                        stroke="currentColor"
+                                        viewBox="0 0 24 24"
+                                    >
+                                        <path
+                                            stroke-linecap="round"
+                                            stroke-linejoin="round"
+                                            stroke-width="3"
+                                            d="M19 9l-7 7-7-7"
+                                        ></path>
+                                    </svg>
+                                </button>
+                            </div>
+                        </div>
+                    </div>
+                </div>
+
+                <div
+                    id="vader-warning"
+                    class="hidden mt-6 bg-sith-900/50 border border-sith-600 rounded p-3 sm:p-4 items-start gap-3"
+                >
+                    <svg
+                        class="w-5 h-5 sm:w-6 sm:h-6 text-sith-500 flex-shrink-0 mt-0.5"
+                        fill="none"
+                        stroke="currentColor"
+                        viewBox="0 0 24 24"
+                    >
+                        <path
+                            stroke-linecap="round"
+                            stroke-linejoin="round"
+                            stroke-width="2"
+                            d="M12 9v2m0 4h.01m-6.938 4h13.856c1.54 0 2.502-1.667 1.732-3L13.732 4c-.77-1.333-2.694-1.333-3.464 0L3.34 16c-.77 1.333.192 3 1.732 3z"
+                        ></path>
+                    </svg>
+                    <div>
+                        <p
+                            class="text-sith-400 text-xs sm:text-sm font-mono leading-relaxed"
+                            id="warning-text"
+                        >
+                            ...
+                        </p>
+                    </div>
+                </div>
+            </section>
+        </main>
+
+        <footer
+            class="w-full mt-auto py-8 px-4 border-t border-zinc-900 bg-black/40 text-center flex flex-col items-center"
+        >
+            <div class="max-w-md">
+                <p class="text-[10px] sm:text-xs text-zinc-500 mb-2 font-mono">
+                    Disclaimer: This is a non-profit fan project created out of
+                    love for Star Wars and for educational purposes (HTML, CSS,
+                    JS, DOM Manipulation).
+                </p>
+                <p
+                    class="text-xs sm:text-sm text-sith-500 font-bold tracking-widest uppercase mb-4 drop-shadow-md"
+                >
+                    <strike>May the Force be with you</strike><br />
+                    <span class="text-[10px] text-red-900"
+                        >Peace is a lie...
+                        <em>The Force shall free me.</em></span
+                    >
+                </p>
+                <p class="text-xs text-zinc-400">
+                    &copy; 2026
+                    <a
+                        href="https://yosong.dev"
+                        target="_blank"
+                        rel="noopener noreferrer"
+                        class="text-zinc-300 hover:text-white transition-colors underline decoration-sith-600 hover:decoration-sith-400 underline-offset-4 font-mono ml-1"
+                    >
+                        yosong.dev
+                    </a>
+                </p>
+            </div>
+        </footer>
+
+        <script>
+            // Gimmick Object holding Vader's voice lines
+            const imperialLore = {
+                vaderThreats: [
+                    'I find your lack of numbers disturbing. Use digits, or face the Force choke.',
+                    'Do not fail me again, Stormtrooper. That is not a valid coordinate.',
+                    'The Emperor is not as forgiving as I am. Enter a real number.',
+                    'Asteroids do not concern me, but your letters in a number field do. Fix it.',
+                    'You have failed me for the last time. Numbers only, or face my lightsaber.',
+                    'I am altering the layout. Pray I do not alter it any further. Use valid numbers.',
+                    'Your typing skills are weaker than the Rebel Alliance. Try again.',
+                    'Be careful not to choke on your own keystrokes. Use numbers.',
+                    'The ability to destroy a planet is insignificant next to the power of a valid integer.',
+                    'I sense a disturbance in the layout. Purge those letters immediately.',
+                    'Perhaps I can find new ways to motivate you to type digits.',
+                    'Your lack of valid input is a direct insult to the Empire.',
+                    'Search your feelings. You know these characters belong in the trash compactor.',
+                    'You are part of the Rebel Alliance and a traitor! Only loyalists use numbers.',
+                    'The Force is weak with your keyboard. Digits only.',
+                    'If you only knew the power of real numbers.',
+                    'Impressive. Every character you just typed was wrong.',
+                    'Do not make me summon the Royal Guards. Fix your input.',
+                    'Letters? Are you a Jedi sympathizer? Numbers are the way of the Sith.',
+                    'You may dispense with the typos, Commander. Enter a valid numeric value.',
+                    'This conversion tool is fully operational, unlike your brain. Digits!',
+                    'I have you now... caught typing alphabets in a number field.',
+                    "Don't be too proud of this technological terror you've coded. It still needs valid numbers.",
+                    'Any more letters and you will be stationed on Hoth. Fix it.',
+                    'You have failed the Death Star UI team for the last time.',
+                    'Join me, and together we can rule the DOM with valid CSS units.',
+                    'There is no escape from my validation rules. Type a number.',
+                ],
+            };
+
+            // DOM Elements
+            const pxInput = document.getElementById('px');
+            const remInput = document.getElementById('rem');
+            const baseInput = document.getElementById('base');
+            const warningDiv = document.getElementById('vader-warning');
+            const warningText = document.getElementById('warning-text');
+
+            // Logic Functions
+            function triggerVaderWarning() {
+                const randomThreat =
+                    imperialLore.vaderThreats[
+                        Math.floor(
+                            Math.random() * imperialLore.vaderThreats.length,
+                        )
+                    ];
+                warningText.textContent = randomThreat;
+
+                warningDiv.classList.remove('hidden');
+                warningDiv.classList.add('flex');
+
+                warningDiv.classList.add('animate-pulse');
+                setTimeout(
+                    () => warningDiv.classList.remove('animate-pulse'),
+                    1000,
+                );
+            }
+
+            function hideWarning() {
+                warningDiv.classList.add('hidden');
+                warningDiv.classList.remove('flex');
+            }
+
+            function syncCalculations(sourceElement) {
+                const base = parseFloat(baseInput.value) || 16;
+                let val = sourceElement.value.trim();
+
+                if (val === '') {
+                    if (sourceElement === pxInput) remInput.value = '';
+                    if (sourceElement === remInput) pxInput.value = '';
+                    hideWarning();
+                    return;
+                }
+
+                if (isNaN(val)) {
+                    triggerVaderWarning();
+                    return;
+                }
+
+                hideWarning();
+                val = parseFloat(val);
+
+                if (sourceElement === pxInput) {
+                    remInput.value = +(val / base).toFixed(3);
+                } else if (sourceElement === remInput) {
+                    pxInput.value = +(val * base).toFixed(3);
+                } else if (sourceElement === baseInput) {
+                    if (pxInput.value && !isNaN(pxInput.value)) {
+                        remInput.value = +(
+                            parseFloat(pxInput.value) / base
+                        ).toFixed(3);
+                    }
+                }
+            }
+
+            function adjustValue(inputId, step) {
+                const input = document.getElementById(inputId);
+                let currentVal = parseFloat(input.value) || 0;
+                input.value = +(currentVal + step).toFixed(3);
+                syncCalculations(input);
+            }
+
+            // Event Listeners setup
+            [pxInput, remInput, baseInput].forEach((input) => {
+                input.addEventListener('input', function () {
+                    syncCalculations(this);
+                });
+
+                input.addEventListener('wheel', function (e) {
+                    if (document.activeElement === this) {
+                        e.preventDefault();
+
+                        let step = this === remInput ? 0.125 : 1;
+                        if (this === baseInput) step = 1;
+
+                        let val = parseFloat(this.value) || 0;
+
+                        if (e.deltaY < 0) {
+                            val += step;
+                        } else if (e.deltaY > 0) {
+                            val -= step;
+                        }
+
+                        if (val < 0) val = 0;
+                        this.value = +val.toFixed(3);
+                        syncCalculations(this);
+                    }
+                });
+            });
+        </script>
+    </body>
+</html>
