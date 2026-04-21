@@ -27,7 +27,7 @@
                         },
                     },
                 },
-            };
+            }
         </script>
         <style>
             body {
@@ -412,14 +412,14 @@
                     'Join me, and together we can rule the DOM with valid CSS units.',
                     'There is no escape from my validation rules. Type a number.',
                 ],
-            };
+            }
 
             // DOM Elements
-            const pxInput = document.getElementById('px');
-            const remInput = document.getElementById('rem');
-            const baseInput = document.getElementById('base');
-            const warningDiv = document.getElementById('vader-warning');
-            const warningText = document.getElementById('warning-text');
+            const pxInput = document.getElementById('px')
+            const remInput = document.getElementById('rem')
+            const baseInput = document.getElementById('base')
+            const warningDiv = document.getElementById('vader-warning')
+            const warningText = document.getElementById('warning-text')
 
             // Logic Functions
             function triggerVaderWarning() {
@@ -428,90 +428,90 @@
                         Math.floor(
                             Math.random() * imperialLore.vaderThreats.length,
                         )
-                    ];
-                warningText.textContent = randomThreat;
+                    ]
+                warningText.textContent = randomThreat
 
-                warningDiv.classList.remove('hidden');
-                warningDiv.classList.add('flex');
+                warningDiv.classList.remove('hidden')
+                warningDiv.classList.add('flex')
 
-                warningDiv.classList.add('animate-pulse');
+                warningDiv.classList.add('animate-pulse')
                 setTimeout(
                     () => warningDiv.classList.remove('animate-pulse'),
                     1000,
-                );
+                )
             }
 
             function hideWarning() {
-                warningDiv.classList.add('hidden');
-                warningDiv.classList.remove('flex');
+                warningDiv.classList.add('hidden')
+                warningDiv.classList.remove('flex')
             }
 
             function syncCalculations(sourceElement) {
-                const base = parseFloat(baseInput.value) || 16;
-                let val = sourceElement.value.trim();
+                const base = parseFloat(baseInput.value) || 16
+                let val = sourceElement.value.trim()
 
                 if (val === '') {
-                    if (sourceElement === pxInput) remInput.value = '';
-                    if (sourceElement === remInput) pxInput.value = '';
-                    hideWarning();
-                    return;
+                    if (sourceElement === pxInput) remInput.value = ''
+                    if (sourceElement === remInput) pxInput.value = ''
+                    hideWarning()
+                    return
                 }
 
                 if (isNaN(val)) {
-                    triggerVaderWarning();
-                    return;
+                    triggerVaderWarning()
+                    return
                 }
 
-                hideWarning();
-                val = parseFloat(val);
+                hideWarning()
+                val = parseFloat(val)
 
                 if (sourceElement === pxInput) {
-                    remInput.value = +(val / base).toFixed(3);
+                    remInput.value = +(val / base).toFixed(3)
                 } else if (sourceElement === remInput) {
-                    pxInput.value = +(val * base).toFixed(3);
+                    pxInput.value = +(val * base).toFixed(3)
                 } else if (sourceElement === baseInput) {
                     if (pxInput.value && !isNaN(pxInput.value)) {
                         remInput.value = +(
                             parseFloat(pxInput.value) / base
-                        ).toFixed(3);
+                        ).toFixed(3)
                     }
                 }
             }
 
             function adjustValue(inputId, step) {
-                const input = document.getElementById(inputId);
-                let currentVal = parseFloat(input.value) || 0;
-                input.value = +(currentVal + step).toFixed(3);
-                syncCalculations(input);
+                const input = document.getElementById(inputId)
+                let currentVal = parseFloat(input.value) || 0
+                input.value = +(currentVal + step).toFixed(3)
+                syncCalculations(input)
             }
 
             // Event Listeners setup
-            [pxInput, remInput, baseInput].forEach((input) => {
+            ;[pxInput, remInput, baseInput].forEach((input) => {
                 input.addEventListener('input', function () {
-                    syncCalculations(this);
-                });
+                    syncCalculations(this)
+                })
 
                 input.addEventListener('wheel', function (e) {
                     if (document.activeElement === this) {
-                        e.preventDefault();
+                        e.preventDefault()
 
-                        let step = this === remInput ? 0.125 : 1;
-                        if (this === baseInput) step = 1;
+                        let step = this === remInput ? 0.125 : 1
+                        if (this === baseInput) step = 1
 
-                        let val = parseFloat(this.value) || 0;
+                        let val = parseFloat(this.value) || 0
 
                         if (e.deltaY < 0) {
-                            val += step;
+                            val += step
                         } else if (e.deltaY > 0) {
-                            val -= step;
+                            val -= step
                         }
 
-                        if (val < 0) val = 0;
-                        this.value = +val.toFixed(3);
-                        syncCalculations(this);
+                        if (val < 0) val = 0
+                        this.value = +val.toFixed(3)
+                        syncCalculations(this)
                     }
-                });
-            });
+                })
+            })
         </script>
     </body>
 </html>
